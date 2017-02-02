@@ -3,6 +3,8 @@ const router = express.Router();
 
 const entryController = require('../controllers/entry.controller');
 
+// Test route
+router.get('/test', (req, res) => {res.send("wrks")});
 
 //Routes
 router.post('/entries', entryController.addEntry);

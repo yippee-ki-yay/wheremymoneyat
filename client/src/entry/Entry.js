@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './Entry.css';
+import axios from 'axios';
 
 class Entry extends Component {
 
@@ -11,6 +12,11 @@ class Entry extends Component {
 
   addEntry() {
     console.log(`Entry added `);
+
+    axios.get('http://localhost:6969/api/test')
+    .then((resp) => {
+      console.log(resp);
+    });
   }
 
   render() {
