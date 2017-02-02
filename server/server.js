@@ -1,6 +1,7 @@
 require('dotenv').load();
 
 require('./models/db');
+require('./config/passport');
 
 const express = require('express');
 const app = express();

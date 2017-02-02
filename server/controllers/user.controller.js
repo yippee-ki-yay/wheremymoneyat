@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const User = mongoose.model('User');
 
+let passport = require('passport');
 
 module.exports.register = async (req, res) => {
 
@@ -32,7 +33,7 @@ module.exports.register = async (req, res) => {
 
 
 module.exports.login = async (req, res) => {
-  console.log("WE DONE IT");
+
   try {
 
     if(!req.body.password || !req.body.email) {
@@ -40,7 +41,6 @@ module.exports.login = async (req, res) => {
     }
 
     passport.authenticate('local', function(err, user, info) {
-
       if (err) {
         sendResponse(res, 404, err);
         return;
@@ -51,12 +51,13 @@ module.exports.login = async (req, res) => {
         sendResponse(res, 200, {token: token});
 
       } else {
-        endResponse(res, 401, info);
+        sendResponse(res, 401, info);
       }
 
     })(req, res);
 
   } catch(err) {
+    console.log(err);
     sendResponse(res, 500, err);
   }
 };
