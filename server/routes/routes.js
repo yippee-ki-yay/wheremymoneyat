@@ -3,6 +3,8 @@ const router = express.Router();
 
 const entryController = require('../controllers/entry.controller');
 
+
+//Routes
 router.post('/entries', entryController.addEntry);
 router.get('/entries/:author', entryController.listUserEntries);
 

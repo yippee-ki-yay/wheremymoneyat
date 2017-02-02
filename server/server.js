@@ -7,7 +7,7 @@ const router = require('./routes/routes');
 
 const PORT = 6969;
 
-app.use(express.static('./../public'));
+//app.use(express.static('./../public'));
 app.use('/api', router);
 
 app.listen(6969, () => {
