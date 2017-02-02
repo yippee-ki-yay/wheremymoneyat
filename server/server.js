@@ -1,5 +1,11 @@
 require('./models/db');
 
+const envs = require('dotenv');
+
+if(envs) {
+  envs.load();
+}
+
 const express = require('express');
 const app = express();
 
