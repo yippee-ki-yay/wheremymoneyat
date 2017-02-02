@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import { browserHistory } from 'react-router';
+
 class Register extends Component {
   constructor (props) {
     super(props);
@@ -54,10 +56,12 @@ class Register extends Component {
       };
 
       console.log(user);
-      
+
       axios.post('http://localhost:6969/api/register', user)
         .then(response => {
           console.log(response);
+
+          browserHistory.push('/login');
         })
         .catch(error => {
           console.log(error);

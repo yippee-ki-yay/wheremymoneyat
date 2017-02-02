@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import { browserHistory } from 'react-router';
+
 class Login extends Component {
   constructor (props) {
     super(props);
@@ -41,6 +43,10 @@ class Login extends Component {
     axios.post("http://localhost:6969/api/login", user)
       .then(response => {
         console.log(response);
+
+        localStorage.setItem('wheremymoneyat-jwt', response.data.token);
+
+        browserHistory.push('/');
       })
       .catch(error => {
         console.log(error);
