@@ -31,7 +31,7 @@ module.exports.register = async (req, res) => {
 
 
 module.exports.login = async (req, res) => {
-
+  console.log("WE DONE IT");
   try {
 
     if(!req.body.password || !req.body.email) {

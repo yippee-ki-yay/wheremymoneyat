@@ -16,9 +16,17 @@ class Login extends Component {
         <h1>Login</h1>
 
         <div className="form-group">
-          <input type="text" value="" placeholder="Username" />
-          <input type="password" value="" placeholder="Password" />
-          <button className="btn btn-default">Login</button>
+          <input value={ this.state.username }
+                 onChange={ this.onInputChange }
+                 name="username"
+                 type="text"
+                 placeholder="Username" />
+          <input value={ this.state.password }
+                 onChange={ this.onInputChange }
+                 name="password"
+                 type="password"
+                 placeholder="Password" />
+          <button onClick={ this.login } className="btn btn-default">Login</button>
         </div>
 
       </div>
@@ -28,7 +36,24 @@ class Login extends Component {
   login = () => {
     console.log(this.state.username);
     console.log(this.state.password);
+    axios.post("http://localhost:6969/api/login", {
+      email: this.state.email,
+      password: this.state.password
+    })
+    .then(response => {
+      console.log(response);
+    })
+    .catch(error => {
+      console.log(error);
+    });
   }
+
+  onInputChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value
+    });
+  }
+
 }
 
 export default Login;
