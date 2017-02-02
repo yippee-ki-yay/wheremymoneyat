@@ -5,7 +5,7 @@ class Register extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: "",
+      name: "",
       email: "",
       password: "",
       confirmPassword: ""
@@ -18,9 +18,9 @@ class Register extends Component {
         <h1>Register</h1>
 
         <div className="form-group">
-          <input value={ this.state.username }
+          <input value={ this.state.name }
                  onChange={ this.onInputChange }
-                 name="username"
+                 name="name"
                  type="text"
                  placeholder="Username" />
           <input value={ this.state.email }
@@ -48,7 +48,7 @@ class Register extends Component {
   register = () => {
     if (this.state.password === this.state.confirmPassword) {
       const user = {
-        username: this.state.username,
+        name: this.state.name,
         email: this.state.email,
         password: this.state.password
       };

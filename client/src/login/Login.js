@@ -5,7 +5,7 @@ class Login extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      username: "",
+      email: "",
       password: ""
     };
   }
@@ -16,9 +16,9 @@ class Login extends Component {
         <h1>Login</h1>
 
         <div className="form-group">
-          <input value={ this.state.username }
+          <input value={ this.state.email }
                  onChange={ this.onInputChange }
-                 name="username"
+                 name="email"
                  type="text"
                  placeholder="Username" />
           <input value={ this.state.password }
@@ -35,7 +35,7 @@ class Login extends Component {
 
   login = () => {
     const user = {
-      username: this.state.username,
+      email: this.state.email,
       password: this.state.password
     };
     axios.post("http://localhost:6969/api/login", user)
