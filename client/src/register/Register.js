@@ -52,6 +52,9 @@ class Register extends Component {
         email: this.state.email,
         password: this.state.password
       };
+
+      console.log(user);
+      
       axios.post('http://localhost:6969/api/register', user)
         .then(response => {
           console.log(response);

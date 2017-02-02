@@ -1,6 +1,9 @@
 const mongoose = require('mongoose');
 
-const UserSchema = new mongoose.Schema({
+const crypto = require('crypto');
+const jwt = require('jsonwebtoken');
+
+let UserSchema = new mongoose.Schema({
   email: {
       type: String,
       unique: true,
@@ -16,20 +19,19 @@ const UserSchema = new mongoose.Schema({
   salt: String,
 });
 
-UserSchema.methods.setPassword = (password) => {
-    // create a random string for salt
+UserSchema.methods.setPassword = function (password) {
+
     this.salt = crypto.randomBytes(16).toString('hex');
 
     // create encrypted hash
     this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
 };
 
-UserSchema.methods.generateJwt = () => {
+UserSchema.methods.generateJwt = function() {
     const expiry = new Date();
 
     // Expire after one day
     expiry.setDate(expiry.getDate() + 1);
-
 
     return jwt.sign({
         _id: this._id,

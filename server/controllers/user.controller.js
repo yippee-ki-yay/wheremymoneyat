@@ -4,6 +4,7 @@ const User = mongoose.model('User');
 
 module.exports.register = async (req, res) => {
 
+
   try {
 
     if(!req.body.password || !req.body.name || !req.body.email) {
