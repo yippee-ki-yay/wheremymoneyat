@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import axios from 'axios';
 
 class Register extends Component {
   constructor (props) {
@@ -45,7 +46,22 @@ class Register extends Component {
   }
 
   register = () => {
-    console.log(this.state);
+    if (this.state.password === this.state.confirmPassword) {
+      const user = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password
+      };
+      axios.post('http://localhost:6969/api/register', user)
+        .then(response => {
+          console.log(response);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    } else {
+      console.log('noobs');
+    }
   }
 
   onInputChange = (event) => {

@@ -34,18 +34,17 @@ class Login extends Component {
   }
 
   login = () => {
-    console.log(this.state.username);
-    console.log(this.state.password);
-    axios.post("http://localhost:6969/api/login", {
-      email: this.state.email,
+    const user = {
+      username: this.state.username,
       password: this.state.password
-    })
-    .then(response => {
-      console.log(response);
-    })
-    .catch(error => {
-      console.log(error);
-    });
+    };
+    axios.post("http://localhost:6969/api/login", user)
+      .then(response => {
+        console.log(response);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   }
 
   onInputChange = (event) => {
