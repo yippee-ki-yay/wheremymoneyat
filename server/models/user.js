@@ -16,4 +16,27 @@ const UserSchema = new mongoose.Schema({
   salt: String,
 });
 
+UserSchema.methods.setPassword = (password) => {
+    // create a random string for salt
+    this.salt = crypto.randomBytes(16).toString('hex');
+
+    // create encrypted hash
+    this.hash = crypto.pbkdf2Sync(password, this.salt, 1000, 64, 'sha1').toString('hex');
+};
+
+UserSchema.methods.generateJwt = () => {
+    const expiry = new Date();
+
+    // Expire after one day
+    expiry.setDate(expiry.getDate() + 1);
+
+
+    return jwt.sign({
+        _id: this._id,
+        email: this.email,
+        name: this.name,
+    }, process.env.JWT_SECRET); // DO NOT KEEP YOUR SECRET IN THE CODE!
+};
+
+
 mongoose.model('User', UserSchema);
