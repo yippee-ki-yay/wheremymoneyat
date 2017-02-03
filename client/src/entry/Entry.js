@@ -46,7 +46,8 @@ class Entry extends Component {
     return (
       <div className="row">
         <div className="input-group big-input col-md-8 col-md-offset-2">
-          <input type="text" onChange={ this.onEntryChange } value={ this.state.entryText } className="form-control" />
+          <input type="text" onChange={ this.onEntryChange } value={ this.state.entryText }
+                placeholder="Where did your moneyz go today?" className="form-control" />
           <span className="input-group-btn">
             <button className="btn btn-default" onClick={ this.addEntry } type="button">Spent</button>
           </span>
