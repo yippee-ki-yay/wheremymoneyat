@@ -8,6 +8,10 @@ class EntryList extends Component {
     super();
   }
 
+  getEntries = () => {
+
+  }
+
   render() {
     return (
       <div className="col-md-8 col-md-offset-2 entry-list">
