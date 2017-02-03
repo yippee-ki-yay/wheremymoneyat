@@ -1,20 +1,7 @@
-.header-title {
-  font-size: 40px;
-  padding-left: 30px;
-  padding-top: -80px;
-  border: solid;
-  font-family: Arial, Helvetica, sans-serif;
-}
-
-.main-form {
-  flex-direction: row;
-}
 
 .big-input {
-  margin-top: 10px;
-  width: 800px;
-  height: 40px;
-  font-size: 24px;
+  margin-top: 50px;
+  height: 0px;
 }
 
 .entry-form {
