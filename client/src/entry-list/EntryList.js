@@ -2,14 +2,31 @@ import React, { Component } from 'react';
 import './EntryList.css';
 import axios from 'axios';
 
+import decode from 'jwt-decode';
+
 class EntryList extends Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
+    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
+    this.user = decode(this.jwt);
+
+    console.log(props);
   }
 
-  getEntries = () => {
-
+  componentWillMount() {
+    axios.get('http://localhost:6969/api/entries/' + this.user._id, {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+      }
+    })
+    .then((resp) => {
+      console.log(resp);
+      this.setState({
+        entries: resp.data
+      });
+    });
   }
 
   render() {

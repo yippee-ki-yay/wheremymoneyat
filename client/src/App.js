@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import Entry from './entry/Entry';
-import EntryList from './entry-list/EntryList';
+import Home from './home/Home';
 import './App.css';
 
 class App extends Component {
@@ -11,8 +10,7 @@ class App extends Component {
         <div className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
         </div>
-        <Entry />
-        <EntryList />
+        <Home />
       </div>
     );
   }
