@@ -32,7 +32,7 @@ class EntryList extends Component {
 
   render() {
     return (
-      <div className="col-md-8 col-md-offset-2 entry-list">
+      <div className="col-md-9 col-md-offset-1 entry-list">
         <h4>List of Entries</h4>
         <table className="table">
           <thead>

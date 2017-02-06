@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
+import './Home.css';
+
 import Entry from '../entry/Entry';
 import EntryList from '../entry-list/EntryList';
+import SideBar from '../sidebar/SideBar';
+import Preference from '../preference/Preference';
 
 import decode from 'jwt-decode';
-
-import logo from '../money.png';
 
 class Home extends Component {
   constructor (props) {
@@ -43,42 +45,8 @@ class Home extends Component {
 
   render() {
     return (
-      <div>
-        <div id="sidebar-wrapper">
-            <ul className="sidebar-nav">
-            <li className="sidebar-brand">
-               <img src={ logo } />
-             </li>
-
-             <hr />
-
-             <li className="today-header">
-               Today
-
-               <div className="price">
-                 $400
-               </div>
-             </li>
-
-             <li className="today-header">
-               Weekly
-
-               <div className="price">
-                 $400
-               </div>
-             </li>
-
-             <li className="today-header">
-               Monthly
-
-               <div className="price">
-                 $400
-               </div>
-             </li>
-
-            </ul>
-        </div>
-
+      <div className="home">
+        <SideBar entries={ this.state.entries } />
         <Entry addEntry={ this.addEntry }/>
         <EntryList entries={ this.state.entries }/>
       </div>
