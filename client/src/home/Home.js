@@ -6,6 +6,8 @@ import EntryList from '../entry-list/EntryList';
 
 import decode from 'jwt-decode';
 
+import logo from '../money.png';
+
 class Home extends Component {
   constructor (props) {
     super(props);
@@ -42,6 +44,41 @@ class Home extends Component {
   render() {
     return (
       <div>
+        <div id="sidebar-wrapper">
+            <ul className="sidebar-nav">
+            <li className="sidebar-brand">
+               <img src={ logo } />
+             </li>
+
+             <hr />
+
+             <li className="today-header">
+               Today
+
+               <div className="price">
+                 $400
+               </div>
+             </li>
+
+             <li className="today-header">
+               Weekly
+
+               <div className="price">
+                 $400
+               </div>
+             </li>
+
+             <li className="today-header">
+               Monthly
+
+               <div className="price">
+                 $400
+               </div>
+             </li>
+
+            </ul>
+        </div>
+
         <Entry addEntry={ this.addEntry }/>
         <EntryList entries={ this.state.entries }/>
       </div>

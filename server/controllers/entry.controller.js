@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 const Entry = mongoose.model('Entry');
 
+const moment = require('moment');
 
 module.exports.addEntry = async (req, res) => {
 
@@ -35,6 +36,22 @@ module.exports.listUserEntries = async (req, res) => {
     sendResponse(res, 500, err);
   }
 
+};
+
+module.exports.sentMonthly = async (req, res) => {
+
+
+};
+
+module.exports.listEntriesByDate = async (req, res) => {
+
+  try {
+
+
+
+  } catch(err) {
+    sendResponse(res, 500, err);
+  }
 
 };
 
