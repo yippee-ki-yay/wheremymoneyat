@@ -1,39 +1,40 @@
 import React, { Component } from 'react';
 import './EntryList.css';
-import axios from 'axios';
-
-import decode from 'jwt-decode';
 
 class EntryList extends Component {
 
   constructor(props) {
     super(props);
 
-    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
-    this.user = decode(this.jwt);
+    this.state = {
+      entries: ''
+    };
 
-    console.log(props);
   }
 
-  componentWillMount() {
-    axios.get('http://localhost:6969/api/entries/' + this.user._id, {
-      headers: {
-        Authorization: 'Bearer ' + this.jwt
-      }
-    })
-    .then((resp) => {
-      console.log(resp);
-      this.setState({
-        entries: resp.data
-      });
+  componentWillReceiveProps(props) {
+
+    const entryTables = props.entries.map(entry =>
+      <tr key={ entry._id }>
+        <td>{ entry.text }</td>
+        <td>{ entry.tags }</td>
+        <td>{ entry.price }</td>
+      </tr>
+    );
+
+    this.setState({
+      entries: entryTables
     });
+
   }
+
+
 
   render() {
     return (
       <div className="col-md-8 col-md-offset-2 entry-list">
         <h4>List of Entries</h4>
-        <table className="table table-hover">
+        <table className="table">
           <thead>
             <tr>
               <th>Entry</th>
@@ -42,11 +43,7 @@ class EntryList extends Component {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td>Potrosio na cokolade</td>
-              <td>#food</td>
-              <td>500</td>
-            </tr>
+            { this.state.entries }
           </tbody>
         </table>
       </div>

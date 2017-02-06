@@ -24,7 +24,7 @@ class Entry extends Component {
     // Extract price, for now just gets a number if exists
     const prices = entry.text.match(/\d+/);
 
-    entry.price = (prices.length > 0) ? (+prices[0]) : 0;
+    entry.price = (prices) ? (+prices[0]) : 0;
 
     // Extract hashtags again for now very simple
     entry.tags = entry.text.match(/#[\w]+(?=\s|$)/g);
@@ -35,7 +35,9 @@ class Entry extends Component {
       }
     })
     .then((resp) => {
-      console.log(resp);
+
+      this.props.addEntry(resp.data);
+
       this.setState({
         entryText: ''
       });
