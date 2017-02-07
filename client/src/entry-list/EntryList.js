@@ -12,12 +12,21 @@ class EntryList extends Component {
 
   }
 
+  searchByTag = (tag) => {
+    console.log(tag);
+  }
+
   componentWillReceiveProps(props) {
 
     const entryTables = props.entries.map(entry =>
       <tr key={ entry._id }>
         <td>{ entry.text }</td>
-        <td>{ entry.tags }</td>
+        <td>
+        { entry.tags.map( t =>
+          <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
+          </span>)
+        }
+         </td>
         <td>{ entry.price }</td>
       </tr>
     );

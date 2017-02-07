@@ -30,7 +30,10 @@ class Home extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:6969/api/entries/' + this.user._id, {
+
+    const currDate = new Date();
+
+    axios.get('http://localhost:6969/api/entries/' + this.user._id + '/' + currDate, {
       headers: {
         Authorization: 'Bearer ' + this.jwt
       }

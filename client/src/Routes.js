@@ -11,11 +11,12 @@ import Reminders from './reminders/Reminders';
 
 const Routes = (props) => (
   <Router {...props}>
-    <Route path="/" component={ App } />
-    <Route path="/preference" component={ Preference } />
-    <Route path="/stats" component={ Stats } />
-    <Route path="/budget" component={ Budget } />
-    <Route path="/reminders" component={ Reminders } />
+    <Route path="/" component={ App } >
+      <Route path="preference" component={ Preference } />
+      <Route path="stats" component={ Stats } />
+      <Route path="budget" component={ Budget } />
+      <Route path="reminders" component={ Reminders } />
+    </Route>
     <Route path="/register" component={ Register } />
     <Route path="/login" component={ Login } />
   </Router>
