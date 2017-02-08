@@ -60,7 +60,7 @@ module.exports.listEntriesByDate = async (req, res) => {
 
   try {
 
-    const today = moment().startOf('day');
+    const today = moment(req.params.date).startOf('day');
     const tomorrow = moment(today).add(1, 'days');
 
     const entries = await Entry.find({createdOn:  {
