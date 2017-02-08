@@ -9,7 +9,9 @@ class HomeStats extends Component {
     super(props);
 
     this.state = {
-      priceToday: 0
+      priceToday: 0,
+      priceThisWeek: 0,
+      priceThisMonth: 0
     };
   }
 
@@ -18,7 +20,9 @@ class HomeStats extends Component {
     const sumToday = props.entries.reduce( (a, b) => ({price: a.price + b.price}));
 
     this.setState({
-      priceToday: sumToday.price
+      priceToday: sumToday.price,
+      priceThisMonth: props.stats.monthPrice,
+      priceThisWeek: props.stats.weekPrice
     });
 
   }
@@ -38,7 +42,7 @@ class HomeStats extends Component {
            Weekly
 
            <div className="price">
-             $0
+             ${ this.state.priceThisWeek }
            </div>
          </li>
 
@@ -46,7 +50,7 @@ class HomeStats extends Component {
            Monthly
 
            <div className="price">
-             $0
+             ${ this.state.priceThisMonth }
            </div>
          </li>
       </span>

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import moment from 'moment';
 
 import './Home.css';
 
@@ -7,6 +8,8 @@ import Entry from '../entry/Entry';
 import EntryList from '../entry-list/EntryList';
 import SideBar from '../sidebar/SideBar';
 import Preference from '../preference/Preference';
+
+
 
 import decode from 'jwt-decode';
 
@@ -18,7 +21,8 @@ class Home extends Component {
     this.user = decode(this.jwt);
 
     this.state = {
-      entries: []
+      entries: [],
+      stats: {}
     };
   }
 
@@ -31,7 +35,7 @@ class Home extends Component {
 
   componentDidMount() {
 
-    const currDate = new Date();
+    const currDate = moment().format();
 
     axios.get('http://localhost:6969/api/entries/' + this.user._id + '/' + currDate, {
       headers: {
@@ -44,12 +48,29 @@ class Home extends Component {
         entries: resp.data
       });
     });
+
+    axios.get('http://localhost:6969/api/stats/' + this.user._id , {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+      }
+    })
+    .then((resp) => {
+      console.log(resp);
+
+      this.setState({
+        stats: resp.data
+      });
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
   }
 
   render() {
     return (
       <div className="home">
-        <SideBar entries={ this.state.entries } />
+        <SideBar entries={ this.state.entries } stats={ this.state.stats } />
         <Entry addEntry={ this.addEntry }/>
         <EntryList entries={ this.state.entries }/>
       </div>

@@ -55,6 +55,31 @@ module.exports.listEntriesByTag = async (req, res) => {
   }
 };
 
+module.exports.spentThisWeek = async (req, res) => {
+  try {
+
+    const sumPriceQuery = sumPrice();
+
+    const monthMatch = createRange('month');
+    const weekMatch = createRange('week');
+
+    const weekResult = await Entry.aggregate(weekMatch, sumPriceQuery).exec();
+
+    const monthResult = await Entry.aggregate(monthMatch, sumPriceQuery).exec();
+
+
+    const result = {
+      monthPrice: monthResult[0].total,
+      weekPrice: weekResult[0].total
+    };
+
+     sendResponse(res, 200, result);
+
+  } catch(err) {
+    sendResponse(res, 400, err);
+  }
+};
+
 // GET /entries/:author/:date
 module.exports.listEntriesByDate = async (req, res) => {
 
@@ -69,40 +94,6 @@ module.exports.listEntriesByDate = async (req, res) => {
                         }, author: req.params.author}).exec();
 
 
-//     const entries = await Entry.aggregate([{
-//         $project : {
-//             year : {
-//                 $year : "$createdOn"
-//             },
-//             month : {
-//                 $month : "$createdOn"
-//             },
-//             week : {
-//                 $week : "$createdOn"
-//             },
-//             day : {
-//                 $dayOfWeek : "$createdOn"
-//             },
-//             _id : 1,
-//             price : 1
-//         }
-//     }, {
-//         $group : {
-//             _id : {
-//                 year : "$year",
-//                 month : "$month",
-//                 week : "$week",
-//                 day : "$day"
-//             },
-//             totalWeightDaily : {
-//                 $sum : "$price"
-//             }
-//         }
-//     }
-// ]).exec();
-
-    console.log(entries);
-
     sendResponse(res, 200, entries);
 
   } catch(err) {
@@ -111,6 +102,26 @@ module.exports.listEntriesByDate = async (req, res) => {
 
 };
 
+function sumPrice() {
+  return {
+    $group: {
+       _id: null,
+       total: { $sum: '$price' }}
+  };
+}
+
+// HELPER
+function createRange(range) {
+  const start = moment().startOf(range);
+  const end = moment().endOf(range);
+
+  return {'$match': {
+    createdOn: {
+      $gte: start.toDate(),
+      $lt: end.toDate()
+    }
+  }};
+}
 
 function sendResponse(res, status, content) {
     res.status(status);

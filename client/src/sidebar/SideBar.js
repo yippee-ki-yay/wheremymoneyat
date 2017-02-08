@@ -11,15 +11,17 @@ class SideBar extends Component {
     super(props);
 
     this.state = {
-      entries: []
+      entries: [],
+      stats: {}
     };
   }
 
   componentWillReceiveProps(props) {
 
-    this.state = {
-      entries: props.entries
-    };
+    this.setState({
+      entries: props.entries,
+      stats: props.stats
+    });
 
   }
 
@@ -35,7 +37,7 @@ class SideBar extends Component {
            <hr />
             <Menu />
            <hr />
-            <HomeStats entries={ this.state.entries }/>
+            <HomeStats entries={ this.state.entries } stats={ this.state.stats } />
           </ul>
       </div>
     );

@@ -20,6 +20,8 @@ router.get('/entries/:author/:date', entryController.listEntriesByDate);
 router.get('/entries/:author', entryController.listUserEntries);
 router.get('/entries/:author/tag/:tag', entryController.listEntriesByTag);
 
+router.get('/stats/:author', entryController.spentThisWeek);
+
 //Users
 router.post('/register', userController.register);
 router.post('/login', userController.login);
