@@ -45,6 +45,10 @@ class Entry extends Component {
         entry: resp.data
       });
 
+      this.setState({
+        entryText: ''
+      });
+
     });
   }
 

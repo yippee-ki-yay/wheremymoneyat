@@ -8,7 +8,7 @@ const entryReducer = (state = initialEntryState, action) => {
 
   switch (action.type) {
     case types.ADD_ENTRY:
-      return {entries: [...state.entries, action.entry]};
+      return {entries: [action.entry, ...state.entries]};
     case types.LIST_ENTRIES:
       return {entries: action.entries};
     default:
