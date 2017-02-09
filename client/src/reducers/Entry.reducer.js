@@ -1,3 +1,5 @@
+import * as types from '../actions/actions-types';
+
 const initialEntryState = {
   entries: []
 };
@@ -5,10 +7,10 @@ const initialEntryState = {
 const entryReducer = (state = initialEntryState, action) => {
 
   switch (action.type) {
-    case 'ADD_ENTRY':
-      console.log("ADD ENTRY being called in reducer");
-      console.log(action.entry);
-      return [...state.entries, action.entry];
+    case types.ADD_ENTRY:
+      return {entries: [...state.entries, action.entry]};
+    case types.LIST_ENTRIES:
+      return {entries: action.entries};
     default:
       return state;
   }

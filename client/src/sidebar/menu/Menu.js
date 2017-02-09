@@ -4,10 +4,6 @@ import './Menu.css';
 
 class Menu extends Component {
 
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     return (
       <span>

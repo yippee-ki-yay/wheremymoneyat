@@ -1,9 +1,11 @@
 import { createStore, combineReducers } from 'redux';
 
-import EntryReducer from './entry/Entry.reducer';
+import EntryReducer from './reducers/Entry.reducer';
+import StatsReducer from './reducers/Stats.reducer';
 
 const reducers = combineReducers({
-  entryState: EntryReducer
+  entryState: EntryReducer,
+  statsState: StatsReducer
 });
 
 const store = createStore(reducers);

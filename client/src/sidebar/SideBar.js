@@ -31,7 +31,7 @@ class SideBar extends Component {
           <ul className="sidebar-nav">
 
           <li className="sidebar-brand">
-             <img src={ logo } />
+             <img alt="jbg nema" src={ logo } />
            </li>
 
            <hr />

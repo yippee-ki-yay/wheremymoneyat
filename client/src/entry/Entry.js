@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import './Entry.css';
 import axios from 'axios';
 
+import * as types from '../actions/actions-types';
+
 import decode from 'jwt-decode';
 
 import store from '../Store';
@@ -39,15 +41,10 @@ class Entry extends Component {
     .then((resp) => {
 
       store.dispatch({
-        type: 'ADD_ENTRY',
+        type: types.ADD_ENTRY,
         entry: resp.data
       });
 
-      // this.props.addEntry(resp.data);
-      //
-      // this.setState({
-      //   entryText: ''
-      // });
     });
   }
 

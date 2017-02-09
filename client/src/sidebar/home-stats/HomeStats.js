@@ -1,29 +1,52 @@
 import React, { Component } from 'react';
 import './HomeStats.css';
+import store from '../../Store';
+import axios from 'axios';
+import * as types from '../../actions/actions-types';
 
-import logo from '../money.png';
+import { connect } from 'react-redux';
+
+import decode from 'jwt-decode';
 
 class HomeStats extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      priceToday: 0,
-      priceThisWeek: 0,
-      priceThisMonth: 0
-    };
+    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
+    this.user = decode(this.jwt);
+
   }
 
+  componentDidMount() {
+    axios.get('http://localhost:6969/api/stats/' + this.user._id , {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+      }
+    })
+    .then((resp) => {
+      console.log(resp);
+
+      store.dispatch({
+        type: types.GET_HOME_STATS,
+        stats: resp.data,
+        entries: this.props.entries
+      });
+
+    })
+    .catch(err => {
+      console.log(err);
+    });
+  }
   componentWillReceiveProps(props) {
 
-    const sumToday = props.entries.reduce( (a, b) => ({price: a.price + b.price}));
-
-    this.setState({
-      priceToday: sumToday.price,
-      priceThisMonth: props.stats.monthPrice,
-      priceThisWeek: props.stats.weekPrice
-    });
+    // const sumToday = props.entries.reduce( (a, b) => ({price: a.price + b.price}));
+    //
+    // this.setState({
+    //   priceToday: sumToday.price,
+    //   priceThisMonth: props.stats.monthPrice,
+    //   priceThisWeek: props.stats.weekPrice
+    // });
 
   }
 
@@ -34,7 +57,7 @@ class HomeStats extends Component {
            Today
 
            <div className="price">
-             ${ this.state.priceToday }
+             ${ this.props.stats.day }
            </div>
          </li>
 
@@ -42,7 +65,7 @@ class HomeStats extends Component {
            Weekly
 
            <div className="price">
-             ${ this.state.priceThisWeek }
+             ${ this.props.stats.week }
            </div>
          </li>
 
@@ -50,7 +73,7 @@ class HomeStats extends Component {
            Monthly
 
            <div className="price">
-             ${ this.state.priceThisMonth }
+             ${ this.props.stats.month }
            </div>
          </li>
       </span>
@@ -60,5 +83,12 @@ class HomeStats extends Component {
 
 }
 
+const mapStateToProps = (store) => {
+  return {
+    stats: store.statsState.stats,
+    entries: store.entryState.entries
+  };
+};
 
-export default HomeStats;
+
+export default connect(mapStateToProps)(HomeStats);

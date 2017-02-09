@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 import './EntryList.css';
 
+import * as types from '../actions/actions-types';
+
+import axios from 'axios';
+import moment from 'moment';
 import { connect } from 'react-redux';
 import store from '../Store';
+import decode from 'jwt-decode';
 
 class EntryList extends Component {
 
   constructor(props) {
     super(props);
 
-    this.state = {
-      entries: ''
-    };
-
-    console.log(props);
+    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
+    this.user = decode(this.jwt);
 
   }
 
@@ -21,32 +23,38 @@ class EntryList extends Component {
     console.log(tag);
   }
 
-  componentWillReceiveProps(props) {
+  componentDidMount() {
 
-    // console.log(props);
-    //
-    // const entryTables = props.entries.map(entry =>
-    //   <tr key={ entry._id }>
-    //     <td>{ entry.text }</td>
-    //     <td>
-    //     { entry.tags.map( t =>
-    //       <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
-    //       </span>)
-    //     }
-    //      </td>
-    //     <td>{ entry.price }</td>
-    //   </tr>
-    // );
+    const currDate = moment().format();
 
-    // this.setState({
-    //   entries: entryTables
-    // });
+    axios.get('http://localhost:6969/api/entries/' + this.user._id + '/' + currDate, {
+      headers: {
+        Authorization: 'Bearer ' + this.jwt
+      }
+    })
+    .then((resp) => {
+      console.log(resp);
 
+      store.dispatch({
+        type: types.LIST_ENTRIES,
+        entries: resp.data
+      });
+
+    });
   }
 
-
+  showTags = (tags) => {
+    if(tags && tags.length > 0) {
+      return (
+        tags.map( t =>
+        <span key={ t } className="tag" onClick={ () => this.searchByTag(t) }> { t }
+        </span>)
+      );
+    }
+  }
 
   render() {
+
     return (
       <div className="col-md-9 col-md-offset-1 entry-list">
         <h4>List of Entries </h4>
@@ -63,9 +71,8 @@ class EntryList extends Component {
               <tr key={ entry._id }>
                 <td>{ entry.text }</td>
                 <td>
-                { entry.tags.map( t =>
-                  <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
-                  </span>)
+                {
+                  this.showTags(entry.tags)
                 }
                  </td>
                 <td>{ entry.price }</td>
