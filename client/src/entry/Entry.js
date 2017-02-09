@@ -18,49 +18,49 @@ class Entry extends Component {
     this.state = {entryText: ''};
   }
 
-  addEntry = () => {
+  addEntry = (e) => {
 
-    const entry = {
-      text: this.state.entryText,
-      author: this.user._id
-    };
+    if(e.key === 'Enter') {
+      const entry = {
+        text: this.state.entryText,
+        author: this.user._id
+      };
 
-    // Extract price, for now just gets a number if exists
-    const prices = entry.text.match(/\d+/);
+      // Extract price, for now just gets a number if exists
+      const prices = entry.text.match(/\d+/);
 
-    entry.price = (prices) ? (+prices[0]) : 0;
+      entry.price = (prices) ? (+prices[0]) : 0;
 
-    // Extract hashtags again for now very simple
-    entry.tags = entry.text.match(/#[\w]+(?=\s|$)/g);
+      // Extract hashtags again for now very simple
+      entry.tags = entry.text.match(/#[\w]+(?=\s|$)/g);
 
-    axios.post('http://localhost:6969/api/entries', entry, {
-      headers: {
-        Authorization: 'Bearer ' + this.jwt
-      }
-    })
-    .then((resp) => {
+      axios.post('http://localhost:6969/api/entries', entry, {
+        headers: {
+          Authorization: 'Bearer ' + this.jwt
+        }
+      })
+      .then((resp) => {
 
-      store.dispatch({
-        type: types.ADD_ENTRY,
-        entry: resp.data
+        store.dispatch({
+          type: types.ADD_ENTRY,
+          entry: resp.data
+        });
+
+        this.setState({
+          entryText: ''
+        });
+
       });
+    }
 
-      this.setState({
-        entryText: ''
-      });
-
-    });
   }
 
   render() {
     return (
       <div className="row">
-        <div className="input-group big-input col-md-9 col-md-offset-1">
-          <input type="text" onChange={ this.onEntryChange } value={ this.state.entryText }
-                placeholder="Where did your moneyz go today?" className="form-control" />
-          <span className="input-group-btn">
-            <button className="btn btn-default" onClick={ this.addEntry } type="button">Spent</button>
-          </span>
+        <div className="big-input col-md-12">
+          <input type="text" onChange={ this.onEntryChange } onKeyPress={ this.addEntry } value={ this.state.entryText }
+                placeholder="What have you spent your money on?" className="form-control entry-input" />
         </div>
       </div>
     )

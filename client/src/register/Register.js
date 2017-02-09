@@ -16,31 +16,34 @@ class Register extends Component {
 
   render() {
     return (
-      <div>
-        <h1>Register</h1>
-
-        <div className="form-group">
+      <div className="wrapper">
+        <div className="form-signin">
+          <h2 className="form-signin-heading">Please Register</h2>
           <input value={ this.state.name }
+                 className="form-control"
                  onChange={ this.onInputChange }
                  name="name"
                  type="text"
                  placeholder="Username" />
           <input value={ this.state.email }
+                 className="form-control"
                  onChange={ this.onInputChange }
                  name="email"
                  type="text"
                  placeholder="Email" />
           <input value={ this.state.password }
+                 className="form-control"
                  onChange={ this.onInputChange }
                  name="password"
                  type="password"
                  placeholder="Password" />
           <input value={ this.state.confirmPassword }
+                 className="form-control"
                  onChange={ this.onInputChange }
                  name="confirmPassword"
                  type="password"
                  placeholder="Confirm Password" />
-          <button onClick={ this.register } className="btn btn-default">Register</button>
+          <button onClick={ this.register } className="btn btn-lg btn-primary btn-block login-btn">Register</button>
         </div>
 
       </div>
