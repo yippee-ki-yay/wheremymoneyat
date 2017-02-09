@@ -4,6 +4,8 @@ import axios from 'axios';
 
 import decode from 'jwt-decode';
 
+import store from '../Store';
+
 class Entry extends Component {
 
   constructor(props) {
@@ -36,11 +38,16 @@ class Entry extends Component {
     })
     .then((resp) => {
 
-      this.props.addEntry(resp.data);
-
-      this.setState({
-        entryText: ''
+      store.dispatch({
+        type: 'ADD_ENTRY',
+        entry: resp.data
       });
+
+      // this.props.addEntry(resp.data);
+      //
+      // this.setState({
+      //   entryText: ''
+      // });
     });
   }
 

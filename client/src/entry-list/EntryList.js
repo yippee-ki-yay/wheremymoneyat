@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import './EntryList.css';
 
+import { connect } from 'react-redux';
+import store from '../Store';
+
 class EntryList extends Component {
 
   constructor(props) {
@@ -10,6 +13,8 @@ class EntryList extends Component {
       entries: ''
     };
 
+    console.log(props);
+
   }
 
   searchByTag = (tag) => {
@@ -18,22 +23,24 @@ class EntryList extends Component {
 
   componentWillReceiveProps(props) {
 
-    const entryTables = props.entries.map(entry =>
-      <tr key={ entry._id }>
-        <td>{ entry.text }</td>
-        <td>
-        { entry.tags.map( t =>
-          <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
-          </span>)
-        }
-         </td>
-        <td>{ entry.price }</td>
-      </tr>
-    );
+    // console.log(props);
+    //
+    // const entryTables = props.entries.map(entry =>
+    //   <tr key={ entry._id }>
+    //     <td>{ entry.text }</td>
+    //     <td>
+    //     { entry.tags.map( t =>
+    //       <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
+    //       </span>)
+    //     }
+    //      </td>
+    //     <td>{ entry.price }</td>
+    //   </tr>
+    // );
 
-    this.setState({
-      entries: entryTables
-    });
+    // this.setState({
+    //   entries: entryTables
+    // });
 
   }
 
@@ -42,7 +49,7 @@ class EntryList extends Component {
   render() {
     return (
       <div className="col-md-9 col-md-offset-1 entry-list">
-        <h4>List of Entries</h4>
+        <h4>List of Entries </h4>
         <table className="table">
           <thead>
             <tr>
@@ -52,7 +59,18 @@ class EntryList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.state.entries }
+            { this.props.entries.map(entry =>
+              <tr key={ entry._id }>
+                <td>{ entry.text }</td>
+                <td>
+                { entry.tags.map( t =>
+                  <span className="tag" onClick={ () => this.searchByTag(t) }> { t }
+                  </span>)
+                }
+                 </td>
+                <td>{ entry.price }</td>
+              </tr>
+            ) }
           </tbody>
         </table>
       </div>
@@ -61,4 +79,10 @@ class EntryList extends Component {
 
 }
 
-export default EntryList;
+const mapStateToProps = (store) => {
+  return {
+    entries: store.entryState.entries
+  };
+};
+
+export default connect(mapStateToProps)(EntryList);
