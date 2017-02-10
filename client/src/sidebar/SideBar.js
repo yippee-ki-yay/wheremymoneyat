@@ -4,25 +4,19 @@ import './SideBar.css';
 import logo from './money.png';
 import HomeStats from './home-stats/HomeStats';
 import Menu from './menu/Menu';
+import { userInfo } from "../utils/user_decode";
+import { browserHistory } from 'react-router';
 
 class SideBar extends Component {
 
   constructor(props) {
     super(props);
-
-    this.state = {
-      entries: [],
-      stats: {}
-    };
+    this.signOut = this.signOut.bind(this);
   }
 
-  componentWillReceiveProps(props) {
-
-    this.setState({
-      entries: props.entries,
-      stats: props.stats
-    });
-
+  signOut() {
+    localStorage.clear();
+    browserHistory.push('/login');
   }
 
   render() {
@@ -31,13 +25,17 @@ class SideBar extends Component {
           <ul className="sidebar-nav">
 
           <li className="sidebar-brand">
-             <img alt="jbg nema" src={ logo } />
+             <img className="logo-image" alt="jbg nema" src={ logo } />
            </li>
-
+           <li>
+            <div className="sidebar__welcome-text">
+              Welcome, {userInfo().name}! (<span onClick={()=>this.signOut()} className="sidebar__sign-out">Sign out?</span>)
+            </div>
+           </li>
            <hr />
             <Menu />
            <hr />
-            <HomeStats entries={ this.state.entries } stats={ this.state.stats } />
+            <HomeStats />
           </ul>
       </div>
     );
