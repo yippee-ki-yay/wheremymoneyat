@@ -29,25 +29,13 @@ class HomeStats extends Component {
 
       store.dispatch({
         type: types.GET_HOME_STATS,
-        stats: resp.data,
-        entries: this.props.entries
+        stats: resp.data
       });
 
     })
     .catch(err => {
       console.log(err);
     });
-  }
-  componentWillReceiveProps(props) {
-
-    // const sumToday = props.entries.reduce( (a, b) => ({price: a.price + b.price}));
-    //
-    // this.setState({
-    //   priceToday: sumToday.price,
-    //   priceThisMonth: props.stats.monthPrice,
-    //   priceThisWeek: props.stats.weekPrice
-    // });
-
   }
 
   render() {
@@ -85,8 +73,7 @@ class HomeStats extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    stats: store.statsState.stats,
-    entries: store.entryState.entries
+    stats: store.entryState.stats
   };
 };
 
