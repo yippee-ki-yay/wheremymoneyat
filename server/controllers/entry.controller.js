@@ -55,13 +55,15 @@ module.exports.listEntriesByTag = async (req, res) => {
   }
 };
 
-module.exports.spentThisWeek = async (req, res) => {
+module.exports.homeStats = async (req, res) => {
   try {
 
     const sumPriceQuery = sumPrice();
 
-    const monthMatch = createRange('month');
-    const weekMatch = createRange('week');
+    console.log(req.params.author);
+
+    const monthMatch = createRange('month', req.params.author);
+    const weekMatch = createRange('week', req.params.author);
 
     const weekResult = await Entry.aggregate(weekMatch, sumPriceQuery).exec();
 
@@ -76,6 +78,7 @@ module.exports.spentThisWeek = async (req, res) => {
      sendResponse(res, 200, result);
 
   } catch(err) {
+    console.log(err);
     sendResponse(res, 400, err);
   }
 };
@@ -111,7 +114,7 @@ function sumPrice() {
 }
 
 // HELPER
-function createRange(range) {
+function createRange(range, authorid) {
   const start = moment().startOf(range);
   const end = moment().endOf(range);
 
@@ -119,7 +122,8 @@ function createRange(range) {
     createdOn: {
       $gte: start.toDate(),
       $lt: end.toDate()
-    }
+    },
+    author: mongoose.Types.ObjectId(authorid)
   }};
 }
 

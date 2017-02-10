@@ -30,8 +30,8 @@ UserSchema.methods.setPassword = function (password) {
 UserSchema.methods.generateJwt = function() {
     const expiry = new Date();
 
-    // Expire after one day
-    expiry.setDate(expiry.getDate() + 1);
+    // Expire after ten days
+    expiry.setDate(expiry.getDate() + 10);
 
     return jwt.sign({
         _id: this._id,

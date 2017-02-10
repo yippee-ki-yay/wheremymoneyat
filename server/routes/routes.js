@@ -15,12 +15,12 @@ router.get('/test', (req, res) => {res.send("wrks")});
 router.get('/test-auth', auth, (req, res) => {res.send(req.user)});
 
 //Entries
-router.post('/entries', entryController.addEntry);
-router.get('/entries/:author/:date', entryController.listEntriesByDate);
-router.get('/entries/:author', entryController.listUserEntries);
-router.get('/entries/:author/tag/:tag', entryController.listEntriesByTag);
+router.post('/entries', auth, entryController.addEntry);
+router.get('/entries/:author/:date', auth, entryController.listEntriesByDate);
+router.get('/entries/:author', auth, entryController.listUserEntries);
+router.get('/entries/:author/tag/:tag', auth, entryController.listEntriesByTag);
 
-router.get('/stats/:author', entryController.spentThisWeek);
+router.get('/stats/:author', auth, entryController.homeStats);
 
 //Users
 router.post('/register', userController.register);
