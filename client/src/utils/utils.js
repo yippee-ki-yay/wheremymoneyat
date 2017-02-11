@@ -19,3 +19,11 @@ export function authHeader() {
     };
   }
 }
+
+export function requireAuth(nextState, replaceState) {
+  let userToken = localStorage.getItem('wheremymoneyat-jwt');
+
+  if(!userToken) {
+    replaceState({ pathname: '/login', nextPathname: nextState.location.pathname });
+  }
+}

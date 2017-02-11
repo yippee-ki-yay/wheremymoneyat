@@ -8,10 +8,11 @@ import Preference from './preference/Preference';
 import Stats from './stats/Stats';
 import Budget from './budget/Budget';
 import Reminders from './reminders/Reminders';
+import * as utils from './utils/utils.js';
 
 const Routes = (props) => (
   <Router {...props}>
-    <Route path="/" component={ App } >
+    <Route path="/" component={ App } onEnter={ utils.requireAuth }>
       <Route path="preference" component={ Preference } />
       <Route path="stats" component={ Stats } />
       <Route path="budget" component={ Budget } />
