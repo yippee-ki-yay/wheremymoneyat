@@ -6,6 +6,9 @@ const moment = require('moment');
 module.exports.addEntry = async (req, res) => {
 
   try {
+
+    req.body.createdOn = moment().toDate();
+
     const entry = new Entry(req.body);
 
     if(!entry) {
@@ -39,12 +42,16 @@ module.exports.listUserEntries = async (req, res) => {
 };
 
 
-//GET /entries/:author/tag/:tag
+//GET /tags/:author/tag/:tag
 module.exports.listEntriesByTag = async (req, res) => {
   try {
 
     const authorId = req.params.author;
-    const tag = req.params.tag;
+    let tag = req.params.tag;
+
+    if(tag) {
+      tag = '#' + tag;
+    }
 
     const entries = await Entry.find({author: authorId, tags: tag}).exec();
 
@@ -59,8 +66,6 @@ module.exports.homeStats = async (req, res) => {
   try {
 
     const sumPriceQuery = sumPrice();
-
-    console.log(req.params.author);
 
     const monthMatch = createRange('month', req.params.author);
     const weekMatch = createRange('week', req.params.author);
@@ -91,11 +96,11 @@ module.exports.listEntriesByDate = async (req, res) => {
     const today = moment(req.params.date).startOf('day');
     const tomorrow = moment(today).add(1, 'days');
 
+
     const entries = await Entry.find({createdOn:  {
                           $gte: today.toDate(),
                           $lt: tomorrow.toDate()
                         }, author: req.params.author}).exec();
-
 
     sendResponse(res, 200, entries);
 

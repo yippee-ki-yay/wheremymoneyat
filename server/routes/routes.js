@@ -18,7 +18,7 @@ router.get('/test-auth', auth, (req, res) => {res.send(req.user)});
 router.post('/entries', auth, entryController.addEntry);
 router.get('/entries/:author/:date', auth, entryController.listEntriesByDate);
 router.get('/entries/:author', auth, entryController.listUserEntries);
-router.get('/entries/:author/tag/:tag', auth, entryController.listEntriesByTag);
+router.get('/tags/:author/tag/:tag', auth, entryController.listEntriesByTag);
 
 router.get('/stats/:author', auth, entryController.homeStats);
 

@@ -4,7 +4,7 @@ import './SideBar.css';
 import logo from './money.png';
 import HomeStats from './home-stats/HomeStats';
 import Menu from './menu/Menu';
-import { userInfo } from "../utils/user_decode";
+import { userInfo } from "../utils/utils";
 import { browserHistory } from 'react-router';
 
 class SideBar extends Component {

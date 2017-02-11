@@ -7,7 +7,8 @@ import axios from 'axios';
 import moment from 'moment';
 import { connect } from 'react-redux';
 import store from '../Store';
-import decode from 'jwt-decode';
+
+import * as utils from '../utils/utils';
 
 class EntryList extends Component {
 
@@ -15,23 +16,28 @@ class EntryList extends Component {
     super(props);
 
     this.jwt = localStorage.getItem('wheremymoneyat-jwt');
-    this.user = decode(this.jwt);
+    this.user = utils.userInfo();
+    this.authHeader = utils.authHeader();
 
   }
 
   searchByTag = (tag) => {
-    console.log(tag);
+
+    //remove the # from tag as it makes it invalid api request
+    tag = tag.substring(1);
+
+    axios.get(`http://localhost:6969/api/tags/${this.user._id}/tag/${tag}` , this.authHeader)
+    .then((resp) => {
+      console.log(resp);
+
+    });
   }
 
   componentDidMount() {
 
     const currDate = moment().format();
 
-    axios.get('http://localhost:6969/api/entries/' + this.user._id + '/' + currDate, {
-      headers: {
-        Authorization: 'Bearer ' + this.jwt
-      }
-    })
+    axios.get(`http://localhost:6969/api/entries/${this.user._id}/${currDate}`, this.authHeader)
     .then((resp) => {
       console.log(resp);
 
