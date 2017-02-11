@@ -67,6 +67,7 @@ module.exports.homeStats = async (req, res) => {
 
     const sumPriceQuery = sumPrice();
 
+    const dayMatch = createRange('day', req.params.author);
     const monthMatch = createRange('month', req.params.author);
     const weekMatch = createRange('week', req.params.author);
 
@@ -74,10 +75,12 @@ module.exports.homeStats = async (req, res) => {
 
     const monthResult = await Entry.aggregate(monthMatch, sumPriceQuery).exec();
 
+    const dayResult = await Entry.aggregate(dayMatch, sumPriceQuery).exec();
 
     const result = {
       monthPrice: monthResult[0].total,
-      weekPrice: weekResult[0].total
+      weekPrice: weekResult[0].total,
+      dayPrice: dayResult[0].total
     };
 
      sendResponse(res, 200, result);

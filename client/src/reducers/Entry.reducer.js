@@ -10,34 +10,27 @@ const entryReducer = (state = initialEntryState, action) => {
   switch (action.type) {
     case types.ADD_ENTRY:
 
-      return {
+      return Object.assign({}, state, {
         entries: [action.entry, ...state.entries],
         stats: {
           month: state.stats.month + action.entry.price,
           week: state.stats.week + action.entry.price,
           day: state.stats.day + action.entry.price
         }
-      };
+      });
     case types.LIST_ENTRIES:
       return Object.assign({}, state, {entries: action.entries});
     case types.LIST_ENTRIES_BY_TAG:
       return Object.assign({}, state, {entries: action.entries});
     case types.GET_HOME_STATS:
 
-      let sumToday = {price: 0};
 
-      if(state.entries.length > 0) {
-        sumToday = state.entries.reduce( (a, b) => ({price: a.price + b.price}));
-      }
-
-
-      return {
-        entries: state.entries,
+      return Object.assign({}, state, {
         stats: {
          month: action.stats.monthPrice,
          week: action.stats.weekPrice,
-         day: sumToday.price
-      }};
+         day: action.stats.dayPrice
+      }});
     default:
       return state;
   }
