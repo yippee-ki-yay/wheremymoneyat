@@ -9,12 +9,7 @@ import { browserHistory } from 'react-router';
 
 class SideBar extends Component {
 
-  constructor(props) {
-    super(props);
-    this.signOut = this.signOut.bind(this);
-  }
-
-  signOut() {
+  signOut = () => {
     localStorage.clear();
     browserHistory.push('/login');
   }
@@ -29,7 +24,7 @@ class SideBar extends Component {
            </li>
            <li>
             <div className="sidebar__welcome-text">
-              Welcome, {userInfo().name}! (<span onClick={()=>this.signOut()} className="sidebar__sign-out">Sign out?</span>)
+              Welcome, {userInfo().name}! (<span onClick={ this.signOut } className="sidebar__sign-out">Sign out?</span>)
             </div>
            </li>
            <hr />
