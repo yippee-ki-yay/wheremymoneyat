@@ -7,7 +7,7 @@ class Preference extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>Preference</div>
 
     );
   }

@@ -6,7 +6,7 @@ class Reminders extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>Reminders</div>
 
     );
   }

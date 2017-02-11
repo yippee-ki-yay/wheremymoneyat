@@ -6,7 +6,7 @@ class Stats extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>Stats</div>
 
     );
   }

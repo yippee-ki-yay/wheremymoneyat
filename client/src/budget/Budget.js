@@ -7,7 +7,7 @@ class Budget extends Component {
 
   render() {
     return (
-      <div></div>
+      <div>Budget</div>
 
     );
   }

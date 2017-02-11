@@ -4,7 +4,7 @@ import axios from 'axios';
 
 import * as types from '../actions/actions-types';
 
-import decode from 'jwt-decode';
+import * as utils from '../utils/utils';
 
 import store from '../Store';
 
@@ -12,8 +12,8 @@ class Entry extends Component {
 
   constructor(props) {
     super(props);
-    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
-    this.user = decode(this.jwt);
+    this.user = utils.userInfo();
+    this.authHeader = utils.authHeader();
 
     this.state = {entryText: ''};
   }
@@ -34,11 +34,7 @@ class Entry extends Component {
       // Extract hashtags again for now very simple
       entry.tags = entry.text.match(/#[\w]+(?=\s|$)/g);
 
-      axios.post('http://localhost:6969/api/entries', entry, {
-        headers: {
-          Authorization: 'Bearer ' + this.jwt
-        }
-      })
+      axios.post('http://localhost:6969/api/entries', entry, this.authHeader)
       .then((resp) => {
 
         store.dispatch({

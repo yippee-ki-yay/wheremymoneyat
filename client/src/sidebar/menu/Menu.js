@@ -7,6 +7,10 @@ class Menu extends Component {
   render() {
     return (
       <span>
+        <li>
+         <a href="/">Home</a>
+        </li>
+
          <li>
           <a href="/preference">Preferences</a>
          </li>

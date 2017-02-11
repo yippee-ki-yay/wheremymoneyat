@@ -3,27 +3,22 @@ import './HomeStats.css';
 import store from '../../Store';
 import axios from 'axios';
 import * as types from '../../actions/actions-types';
+import * as utils from '../../utils/utils';
 
 import { connect } from 'react-redux';
 
-import decode from 'jwt-decode';
 
 class HomeStats extends Component {
 
   constructor(props) {
     super(props);
 
-    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
-    this.user = decode(this.jwt);
-
+    this.user = utils.userInfo();
+    this.authHeader = utils.authHeader();
   }
 
   componentDidMount() {
-    axios.get('http://localhost:6969/api/stats/' + this.user._id , {
-      headers: {
-        Authorization: 'Bearer ' + this.jwt
-      }
-    })
+    axios.get(`http://localhost:6969/api/stats/${this.user._id}`, this.authHeader)
     .then((resp) => {
       console.log(resp);
 
