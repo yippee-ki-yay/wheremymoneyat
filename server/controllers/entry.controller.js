@@ -91,6 +91,40 @@ module.exports.homeStats = async (req, res) => {
   }
 };
 
+module.exports.listEntriesByDay = async (req, res) => {
+  try {
+    const entries = await Entry.aggregate(
+      {
+        $match: {
+          author: mongoose.Types.ObjectId(req.params.author)
+        }
+      },
+      {
+        $group: {
+         _id: { $dayOfMonth: '$createdOn'},
+         entries: {
+           $push: {
+             "_id": "$_id",
+             "text": "$text",
+             "tags": "$tags",
+             "price": "$price"
+           }
+         }
+         }
+       },
+       {
+         $limit: parseInt(req.params.numdays)
+       }
+    );
+
+    sendResponse(res, 200, entries);
+
+  } catch(err) {
+    console.log(err);
+      sendResponse(res, 500, err);
+  }
+};
+
 // GET /entries/:author/:date
 module.exports.listEntriesByDate = async (req, res) => {
 
@@ -104,6 +138,7 @@ module.exports.listEntriesByDate = async (req, res) => {
                           $gte: today.toDate(),
                           $lt: tomorrow.toDate()
                         }, author: req.params.author}).exec();
+
 
     sendResponse(res, 200, entries);
 

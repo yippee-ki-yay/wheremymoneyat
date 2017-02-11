@@ -56,7 +56,7 @@ class Entry extends Component {
       <div className="row">
         <div className="big-input col-md-12">
           <input type="text" onChange={ this.onEntryChange } onKeyPress={ this.addEntry } value={ this.state.entryText }
-                placeholder="What have you spent your money on?" className="form-control entry-input" />
+                placeholder="What have you spent your money on?"  className="form-control entry-input" />
         </div>
       </div>
     )

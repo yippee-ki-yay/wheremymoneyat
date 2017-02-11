@@ -15,7 +15,6 @@ class EntryList extends Component {
   constructor(props) {
     super(props);
 
-    this.jwt = localStorage.getItem('wheremymoneyat-jwt');
     this.user = utils.userInfo();
     this.authHeader = utils.authHeader();
 
@@ -40,7 +39,7 @@ class EntryList extends Component {
 
     const currDate = moment().format();
 
-    axios.get(`http://localhost:6969/api/entries/${this.user._id}/${currDate}`, this.authHeader)
+    axios.get(`http://localhost:6969/api/days/7/entries/${this.user._id}`, this.authHeader)
     .then((resp) => {
       console.log(resp);
 
@@ -62,12 +61,24 @@ class EntryList extends Component {
     }
   }
 
+  showTitle = (index) => {
+    if(index === 0) {
+      return "Today";
+    } else if(index === 1) {
+      return "Yesterday";
+    } else {
+      return moment().subtract(index, 'days').format('dddd, Do MMM');
+    }
+  }
+
   render() {
 
     return (
-      <div className="col-md-9 col-md-offset-1 entry-list">
-        <h4>List of Entries </h4>
-        <table className="table">
+      <div>
+      {this.props.entries.map((days, index) =>
+      <div key={ days._id } className="col-md-12  entry-list">
+        <h3>{ this.showTitle(index) }</h3>
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>Entry</th>
@@ -76,7 +87,8 @@ class EntryList extends Component {
             </tr>
           </thead>
           <tbody>
-            { this.props.entries.map(entry =>
+            {
+              days.entries.map(entry =>
               <tr key={ entry._id }>
                 <td>{ entry.text }</td>
                 <td>
@@ -84,11 +96,13 @@ class EntryList extends Component {
                   this.showTags(entry.tags)
                 }
                  </td>
-                <td>{ entry.price }</td>
+                <td className="price">${ entry.price }</td>
               </tr>
             ) }
           </tbody>
         </table>
+      </div>
+      )}
       </div>
     );
   }

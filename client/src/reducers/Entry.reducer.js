@@ -9,15 +9,18 @@ const entryReducer = (state = initialEntryState, action) => {
 
   switch (action.type) {
     case types.ADD_ENTRY:
+      let rest = [];
 
-      return Object.assign({}, state, {
-        entries: [action.entry, ...state.entries],
+      let newState =  Object.assign({}, state, {
         stats: {
           month: state.stats.month + action.entry.price,
           week: state.stats.week + action.entry.price,
           day: state.stats.day + action.entry.price
         }
       });
+
+
+      return newState;
     case types.LIST_ENTRIES:
       return Object.assign({}, state, {entries: action.entries});
     case types.LIST_ENTRIES_BY_TAG:

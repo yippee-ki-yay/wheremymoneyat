@@ -7,3 +7,17 @@
   margin-left: 2px;
   cursor: pointer;
 }
+
+tr {
+  background-color: #FDFDFE;
+  height: 50px;
+}
+
+td {
+  font-size: 16px;
+}
+
+.price {
+  font-size: 20px;
+  font-weight: bold;
+}
