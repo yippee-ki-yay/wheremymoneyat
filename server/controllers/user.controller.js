@@ -5,7 +5,6 @@ let passport = require('passport');
 
 module.exports.register = async (req, res) => {
 
-
   try {
 
     if(!req.body.password || !req.body.name || !req.body.email) {
@@ -19,13 +18,17 @@ module.exports.register = async (req, res) => {
 
     user.setPassword(req.body.password);
 
+
     const token = user.generateJwt();
 
     await user.save();
 
+    console.log('In register');
+
     sendResponse(res, 200, {token: token});
 
   } catch(err) {
+    console.log(err);
     sendResponse(res, 500, err);
   }
 

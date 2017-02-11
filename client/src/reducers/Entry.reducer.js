@@ -22,9 +22,12 @@ const entryReducer = (state = initialEntryState, action) => {
       return {entries: action.entries, stats: {}};
     case types.GET_HOME_STATS:
 
-      console.log(state.stats);
+      let sumToday = {price: 0};
 
-      const sumToday = state.entries.reduce( (a, b) => ({price: a.price + b.price}));
+      if(state.entries.length > 0) {
+        sumToday = state.entries.reduce( (a, b) => ({price: a.price + b.price}));
+      }
+
 
       return {
         entries: state.entries,
