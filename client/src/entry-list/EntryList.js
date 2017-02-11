@@ -29,7 +29,10 @@ class EntryList extends Component {
     axios.get(`http://localhost:6969/api/tags/${this.user._id}/tag/${tag}` , this.authHeader)
     .then((resp) => {
       console.log(resp);
-
+      store.dispatch({
+        type: types.LIST_ENTRIES_BY_TAG,
+        entries: resp.data
+      });
     });
   }
 

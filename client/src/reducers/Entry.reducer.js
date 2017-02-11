@@ -19,7 +19,9 @@ const entryReducer = (state = initialEntryState, action) => {
         }
       };
     case types.LIST_ENTRIES:
-      return {entries: action.entries, stats: {}};
+      return Object.assign({}, state, {entries: action.entries});
+    case types.LIST_ENTRIES_BY_TAG:
+      return Object.assign({}, state, {entries: action.entries});
     case types.GET_HOME_STATS:
 
       let sumToday = {price: 0};
