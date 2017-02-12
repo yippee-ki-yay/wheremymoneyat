@@ -74,6 +74,10 @@ class EntryList extends Component {
     }
   }
 
+  deleteEntry = (day, tableIndex, entryId) => {
+    console.log(day + " " + tableIndex + " " + entryId);
+  }
+
   render() {
 
     return (
@@ -87,11 +91,12 @@ class EntryList extends Component {
               <th>Entry</th>
               <th>Tags</th>
               <th>Price</th>
+              <th>Remove</th>
             </tr>
           </thead>
           <tbody>
             {
-              days.entries.map(entry =>
+              days.entries.map((entry, i) =>
               <tr key={ entry._id }>
                 <td>{ entry.text }</td>
                 <td>
@@ -100,6 +105,7 @@ class EntryList extends Component {
                 }
                  </td>
                 <td className="price">${ entry.price }</td>
+                <td><button className="remove-btn" onClick={ () => this.deleteEntry(i, index, entry._id) }>X</button></td>
               </tr>
             ) }
           </tbody>

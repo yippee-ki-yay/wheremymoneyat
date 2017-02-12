@@ -1,0 +1,12 @@
+.price-header {
+  color: #11BE66;
+  font-size: 14;
+}
+
+.price-stats {
+  color: white;
+  padding-left: 20px;
+  font-weight: 500;
+  font-size: 20px;
+  font-family: 'Open Sans', sans-serif!important;
+}

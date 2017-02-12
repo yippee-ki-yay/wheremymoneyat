@@ -36,26 +36,23 @@ class HomeStats extends Component {
   render() {
     return (
       <span>
-         <li className="today-header">
-           Today
-
-           <div className="price">
+         <li>
+           <span className="price-header">Today</span>
+           <div className="price-stats">
              ${ this.props.stats.day }
            </div>
          </li>
 
-         <li className="today-header">
-           Weekly
-
-           <div className="price">
+         <li>
+           <span className="price-header">This Week</span>
+           <div className="price-stats">
              ${ this.props.stats.week }
            </div>
          </li>
 
-         <li className="today-header">
-           Monthly
-
-           <div className="price">
+         <li>
+           <span className="price-header">This Month</span>
+           <div className="price-stats">
              ${ this.props.stats.month }
            </div>
          </li>
