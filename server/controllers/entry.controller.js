@@ -77,11 +77,22 @@ module.exports.homeStats = async (req, res) => {
 
     const dayResult = await Entry.aggregate(dayMatch, sumPriceQuery).exec();
 
-    const result = {
-      monthPrice: monthResult[0].total,
-      weekPrice: weekResult[0].total,
-      dayPrice: dayResult[0].total
-    };
+    let result = {};
+
+    if(!weekResult[0] || !monthResult[0] || !dayResult[0]) {
+      result = {
+        monthPrice: 0,
+        weekPrice: 0,
+        dayPrice: 0
+      };
+    } else {
+      result = {
+        monthPrice: monthResult[0].total ,
+        weekPrice: weekResult[0].total,
+        dayPrice: dayResult[0].total
+      };
+    }
+
 
      sendResponse(res, 200, result);
 
@@ -114,7 +125,13 @@ module.exports.listEntriesByDay = async (req, res) => {
        },
        {
          $limit: parseInt(req.params.numdays)
-       }
+       },
+      //  {
+      //    $project: {
+      //      _id: 0,
+      //      date: '$createdOn'
+      //    }
+      //  }
     );
 
     sendResponse(res, 200, entries);

@@ -37,7 +37,7 @@ class EntryList extends Component {
 
   componentDidMount() {
 
-    const currDate = moment().format();
+    //const currDate = moment().format();
 
     axios.get(`http://localhost:6969/api/days/7/entries/${this.user._id}`, this.authHeader)
     .then((resp) => {
@@ -61,7 +61,10 @@ class EntryList extends Component {
     }
   }
 
-  showTitle = (index) => {
+  showTitle = (index, days) => {
+
+    console.log(days.entries[0]);
+
     if(index === 0) {
       return "Today";
     } else if(index === 1) {
@@ -77,7 +80,7 @@ class EntryList extends Component {
       <div>
       {this.props.entries.map((days, index) =>
       <div key={ days._id } className="col-md-12  entry-list">
-        <h3>{ this.showTitle(index) }</h3>
+        <h3>{ this.showTitle(index, days) }</h3>
         <table className="table table-striped">
           <thead>
             <tr>

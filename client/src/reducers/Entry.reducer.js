@@ -1,5 +1,6 @@
 import * as types from '../actions/actions-types';
 
+
 const initialEntryState = {
   entries: [],
   stats: {}
@@ -9,15 +10,24 @@ const entryReducer = (state = initialEntryState, action) => {
 
   switch (action.type) {
     case types.ADD_ENTRY:
-      let rest = [];
 
-      let newState =  Object.assign({}, state, {
+      let addStats =  Object.assign({}, state, {
         stats: {
           month: state.stats.month + action.entry.price,
           week: state.stats.week + action.entry.price,
           day: state.stats.day + action.entry.price
         }
       });
+
+      // A VERY BAD DEEP COPY...mmmokay
+      let newState = JSON.parse(JSON.stringify(addStats));
+
+      if(newState.entries[0]) {
+        newState.entries[0].entries.unshift(action.entry);
+      } else {
+        newState.entries = [];
+        newState.entries.push({entries: [action.entry]});
+      }
 
 
       return newState;
