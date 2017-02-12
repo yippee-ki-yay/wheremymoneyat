@@ -63,14 +63,14 @@ class EntryList extends Component {
 
   showTitle = (index, days) => {
 
-    console.log(days.entries[0]);
+    let entryDate = moment(days.entries[0].createdOn);
 
-    if(index === 0) {
+    if(moment().isSame(entryDate, 'day')) {
       return "Today";
-    } else if(index === 1) {
+    } else if(moment().subtract(1, 'days').isSame(entryDate, 'day')) {
       return "Yesterday";
     } else {
-      return moment().subtract(index, 'days').format('dddd, Do MMM');
+      return entryDate.format('dddd, Do MMM');
     }
   }
 

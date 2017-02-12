@@ -118,7 +118,8 @@ module.exports.listEntriesByDay = async (req, res) => {
              "_id": "$_id",
              "text": "$text",
              "tags": "$tags",
-             "price": "$price"
+             "price": "$price",
+             "createdOn": "$createdOn"
            }
          }
          }
