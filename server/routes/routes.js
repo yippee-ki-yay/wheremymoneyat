@@ -5,6 +5,7 @@ const jwt = require('express-jwt');
 
 const entryController = require('../controllers/entry.controller');
 const userController = require('../controllers/user.controller');
+const budgetController = require('../controllers/budget.controller');
 
 const auth = jwt({
   secret: process.env.JWT_SECRET,
@@ -24,6 +25,10 @@ router.put('/entries/:entryid', auth, entryController.updateEntry);
 router.delete('/entries/:entryid', auth, entryController.deleteEntry);
 
 router.get('/stats/:author', auth, entryController.homeStats);
+
+//Budget
+router.post('/budget/:userid', auth, budgetController.addBudget);
+router.get('/budget/:userid', auth, budgetController.listUserBudgets);
 
 //Users
 router.post('/register', userController.register);

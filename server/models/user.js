@@ -3,7 +3,13 @@ const mongoose = require('mongoose');
 const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
-let UserSchema = new mongoose.Schema({
+const BudgetSchema = new mongoose.Schema({
+  type: {String},
+  price: {Number},
+  byTags: [String]
+});
+
+const UserSchema = new mongoose.Schema({
   email: {
       type: String,
       unique: true,
@@ -17,7 +23,10 @@ let UserSchema = new mongoose.Schema({
   registeredOn: {type: Date, default: Date.now},
   hash: String,
   salt: String,
+  budgets: [BudgetSchema]
 });
+
+
 
 UserSchema.methods.setPassword = function (password) {
 
