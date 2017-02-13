@@ -79,19 +79,12 @@ module.exports.homeStats = async (req, res) => {
 
     let result = {};
 
-    if(!weekResult[0] || !monthResult[0] || !dayResult[0]) {
-      result = {
-        monthPrice: 0,
-        weekPrice: 0,
-        dayPrice: 0
-      };
-    } else {
-      result = {
-        monthPrice: monthResult[0].total ,
-        weekPrice: weekResult[0].total,
-        dayPrice: dayResult[0].total
-      };
-    }
+    result = {
+      monthPrice: (monthResult[0]) ? monthResult[0].total : 0,
+      weekPrice: (weekResult[0]) ? weekResult[0].total : 0,
+      dayPrice: (dayResult[0]) ? dayResult[0].total : 0
+    };
+
 
 
      sendResponse(res, 200, result);
@@ -160,6 +153,39 @@ module.exports.listEntriesByDate = async (req, res) => {
 
     sendResponse(res, 200, entries);
 
+  } catch(err) {
+    sendResponse(res, 500, err);
+  }
+
+};
+
+module.exports.deleteEntry = async (req, res) => {
+
+  try {
+
+    const deletedEntry = await Entry.remove({_id: req.params.entryid});
+
+
+    sendResponse(res, 200, deletedEntry);
+  } catch(err) {
+    sendResponse(res, 500, err);
+  }
+
+};
+
+module.exports.updateEntry = async (req, res) => {
+
+  try {
+
+    const entry = await Entry.findOne({_id: req.params.entryid});
+
+    entry.text = req.body.text;
+    entry.tags = req.body.tags;
+    entry.price = req.body.price;
+
+    const savedEntry = await entry.save();
+
+    sendResponse(res, 200, savedEntry);
   } catch(err) {
     sendResponse(res, 500, err);
   }

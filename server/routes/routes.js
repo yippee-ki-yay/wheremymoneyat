@@ -20,6 +20,8 @@ router.get('/entries/:author/:date', auth, entryController.listEntriesByDate);
 router.get('/days/:numdays/entries/:author', auth, entryController.listEntriesByDay);
 //router.get('/entries/:author', auth, entryController.listUserEntries);
 router.get('/tags/:author/tag/:tag', auth, entryController.listEntriesByTag);
+router.put('/entries/:entryid', auth, entryController.updateEntry);
+router.delete('/entries/:entryid', auth, entryController.deleteEntry);
 
 router.get('/stats/:author', auth, entryController.homeStats);
 

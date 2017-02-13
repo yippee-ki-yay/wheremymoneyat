@@ -10,6 +10,8 @@ import store from '../Store';
 
 import * as utils from '../utils/utils';
 
+import InlineEdit from 'react-edit-inline';
+
 class EntryList extends Component {
 
   constructor(props) {
@@ -74,9 +76,31 @@ class EntryList extends Component {
     }
   }
 
-  deleteEntry = (day, tableIndex, entryId) => {
+  deleteEntry = (tableIndex, day, entryId) => {
     console.log(day + " " + tableIndex + " " + entryId);
+
+    axios.delete(`http://localhost:6969/api/entries/${entryId}`, this.authHeader)
+    .then((resp) => {
+      console.log(resp);
+
+      store.dispatch({
+        type: types.DELETE_ENTRY,
+        position: {day, tableIndex}
+      });
+
+    });
   }
+
+  updateEntry = (entry, updatedField) => {
+
+     const updatedEntry = Object.assign({}, entry, updatedField);
+
+     axios.put(`http://localhost:6969/api/entries/${entry._id}`, updatedEntry,  this.authHeader)
+     .then((resp) => {
+       console.log(resp);
+
+     });
+  };
 
   render() {
 
@@ -98,13 +122,13 @@ class EntryList extends Component {
             {
               days.entries.map((entry, i) =>
               <tr key={ entry._id }>
-                <td>{ entry.text }</td>
+                <td><InlineEdit text={ entry.text } change={(text) => this.updateEntry(entry, text)} paramName="text"/></td>
                 <td>
                 {
                   this.showTags(entry.tags)
                 }
                  </td>
-                <td className="price">${ entry.price }</td>
+                <td className="price">$<InlineEdit text={ entry.price.toString() } change={(price) => this.updateEntry(entry, price)} paramName="price"/></td>
                 <td><button className="remove-btn" onClick={ () => this.deleteEntry(i, index, entry._id) }>X</button></td>
               </tr>
             ) }

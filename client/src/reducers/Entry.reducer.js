@@ -23,6 +23,7 @@ const entryReducer = (state = initialEntryState, action) => {
       let newState = JSON.parse(JSON.stringify(addStats));
 
       if(newState.entries[0]) {
+        //TODO: if there is an entry date, create new one if it's not today
         newState.entries[0].entries.unshift(action.entry);
       } else {
         newState.entries = [];
@@ -36,14 +37,19 @@ const entryReducer = (state = initialEntryState, action) => {
     case types.LIST_ENTRIES_BY_TAG:
       return Object.assign({}, state, {entries: action.entries});
     case types.GET_HOME_STATS:
-
-
       return Object.assign({}, state, {
         stats: {
          month: action.stats.monthPrice,
          week: action.stats.weekPrice,
          day: action.stats.dayPrice
       }});
+    case types.DELETE_ENTRY: {
+      let newState = JSON.parse(JSON.stringify(state));
+
+      newState.entries[action.position.day].entries.splice(action.position.tableIndex, 1);
+
+      return newState;
+    }
     default:
       return state;
   }
