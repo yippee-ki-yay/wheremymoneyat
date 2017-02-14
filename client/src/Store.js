@@ -1,9 +1,9 @@
 import { createStore, combineReducers } from 'redux';
 
-import EntryReducer from './reducers/Entry.reducer';
+import MainReducer from './reducers/Main.reducer';
 
 const reducers = combineReducers({
-  entryState: EntryReducer
+  mainState: MainReducer
 });
 
 const store = createStore(reducers);

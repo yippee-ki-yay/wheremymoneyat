@@ -3,7 +3,11 @@ import * as types from '../actions/actions-types';
 
 const initialEntryState = {
   entries: [],
-  stats: {}
+  stats: {},
+  budget: {
+    budgetPrice: 0,
+    budgetInterval: "Month"
+  }
 };
 
 const entryReducer = (state = initialEntryState, action) => {
@@ -50,6 +54,21 @@ const entryReducer = (state = initialEntryState, action) => {
 
       return newState;
     }
+
+    case types.UPDATE_BUDGET:
+      return Object.assign({}, state, {budget: action.budget});
+
+    case types.GET_BUDGET:
+      const { price, interval }  = action.budgets[0];
+
+      console.log(price +  " " + interval);
+
+      return Object.assign({}, state, {
+        budget: {
+          budgetPrice: price,
+          budgetInterval: interval
+        }});
+
     default:
       return state;
   }

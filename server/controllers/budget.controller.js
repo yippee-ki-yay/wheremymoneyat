@@ -7,15 +7,26 @@ module.exports.addBudget = async (req, res) => {
 
     const user = await User.findById(req.params.userid).exec();
 
-    user.budgets.push({
-      type: req.body.type,
-      price: req.body.price,
+    const newBudget = {
+      interval: req.body.budgetInterval,
+      price: req.body.budgetPrice,
       byTags: req.body.byTags
-    })
+    };
+
+    console.log(req.body);
+
+    if(req.body.type === 'general') {
+      if(user.budgets[0]) {
+        user.budgets[0].price = parseInt(req.body.budgetPrice);
+        user.budgets[0].interval = req.body.budgetInterval;
+      } else {
+        user.budgets.push(newBudget);
+      }
+    }
 
     const savedUser = await user.save();
 
-    sendResponse(res, 200, err);
+    sendResponse(res, 200, newBudget);
 
   } catch(err) {
     console.log(err);

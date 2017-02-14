@@ -65,7 +65,7 @@ class HomeStats extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    stats: store.entryState.stats
+    stats: store.mainState.stats
   };
 };
 

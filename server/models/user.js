@@ -4,8 +4,8 @@ const crypto = require('crypto');
 const jwt = require('jsonwebtoken');
 
 const BudgetSchema = new mongoose.Schema({
-  type: {String},
-  price: {Number},
+  interval: {type: String},
+  price: {type: Number},
   byTags: [String]
 });
 

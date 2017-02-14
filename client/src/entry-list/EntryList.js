@@ -39,8 +39,6 @@ class EntryList extends Component {
 
   componentDidMount() {
 
-    //const currDate = moment().format();
-
     axios.get(`http://localhost:6969/api/days/7/entries/${this.user._id}`, this.authHeader)
     .then((resp) => {
       console.log(resp);
@@ -144,7 +142,7 @@ class EntryList extends Component {
 
 const mapStateToProps = (store) => {
   return {
-    entries: store.entryState.entries
+    entries: store.mainState.entries
   };
 };
 
