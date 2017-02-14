@@ -1,5 +1,9 @@
 .entry-list {
-  margin-top: 70px;
+  margin-top: 10px;
+}
+
+.days {
+  color: #11BE66
 }
 
 .tag {

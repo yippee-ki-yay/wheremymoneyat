@@ -4,6 +4,7 @@ import './Home.css';
 
 import Entry from '../entry/Entry';
 import EntryList from '../entry-list/EntryList';
+import InfoStrip from './info-strip/InfoStrip';
 
 class Home extends Component {
 
@@ -11,6 +12,7 @@ class Home extends Component {
     return (
       <div>
         <Entry/>
+        <InfoStrip/>
         <EntryList/>
       </div>
     );

@@ -106,7 +106,7 @@ class EntryList extends Component {
       <div>
       {this.props.entries.map((days, index) =>
       <div key={ days._id } className="col-md-12  entry-list">
-        <h3>{ this.showTitle(index, days) }</h3>
+        <h3 className="days">{ this.showTitle(index, days) }</h3>
         <table className="table table-striped">
           <thead>
             <tr>
