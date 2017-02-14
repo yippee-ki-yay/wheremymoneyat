@@ -21,6 +21,7 @@ class Login extends Component {
           <input type="text" name="email" className="form-control"  value={ this.state.email } onChange={ this.onInputChange } placeholder="Email" />
           <input type="password" name="password" className="form-control"  value={ this.state.password } onChange={ this.onInputChange } placeholder="Password" required=""/>
           <button className="btn btn-lg btn-primary btn-block login-btn" onClick={ this.login }>Login</button>
+            <a href="/register">Register</a>
         </div>
       </div>
     );

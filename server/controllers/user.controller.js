@@ -29,7 +29,7 @@ module.exports.register = async (req, res) => {
 
   } catch(err) {
     console.log(err);
-    sendResponse(res, 500, err);
+    sendResponse(res, 400, err.errmsg);
   }
 
 };

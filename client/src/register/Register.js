@@ -67,7 +67,11 @@ class Register extends Component {
           browserHistory.push('/login');
         })
         .catch(error => {
-          console.log(error);
+          const errorObject = Object.assign({}, error);
+
+          if(errorObject.response.data.indexOf('email_1 dup key') !== -1) {
+            console.log('Same email');
+          }
         });
     } else {
       console.log('noobs');
