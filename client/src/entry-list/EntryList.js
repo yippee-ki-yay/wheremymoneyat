@@ -75,7 +75,6 @@ class EntryList extends Component {
   }
 
   deleteEntry = (tableIndex, day, entryId) => {
-    console.log(day + " " + tableIndex + " " + entryId);
 
     axios.delete(`http://localhost:6969/api/entries/${entryId}`, this.authHeader)
     .then((resp) => {
@@ -106,6 +105,7 @@ class EntryList extends Component {
       <div>
       {this.props.entries.map((days, index) =>
       <div key={ days._id } className="col-md-12  entry-list">
+        <hr />
         <h3 className="days">{ this.showTitle(index, days) }</h3>
         <table className="table table-striped">
           <thead>

@@ -27,7 +27,6 @@ class Budget extends Component {
 
     axios.get(`http://localhost:6969/api/budget/${this.user._id}`, this.authHeader)
     .then((resp) => {
-      console.log(resp);
 
       store.dispatch({
         type: types.GET_BUDGET,

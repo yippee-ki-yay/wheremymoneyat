@@ -2,8 +2,26 @@ import React, { Component } from 'react';
 
 import './Preference.css';
 
+import { currencies } from './currencies.js';
+
 class Preference extends Component {
 
+  constructor(param) {
+    super(param);
+
+    this.currencies = Object.keys(currencies).map(key =>
+    <option value={currencies[key].symbol} key={ key }>{`${key} - ${currencies[key].label}`}</option>);
+  }
+
+  currencySelect = (e) => {
+    console.log(e);
+  }
+
+  onInputChange = (event) => {
+
+    console.log(event.target.value);
+
+  }
 
   render() {
     return (
@@ -15,8 +33,9 @@ class Preference extends Component {
 
               <div className="form-group">
                 <label>Pick currency</label>
-                <div className="bfh-selectbox bfh-currencies" data-currency="EUR" data-flags="true">
-                </div>
+                <select onChange={ this.onInputChange } className="form-control">
+                  { this.currencies }
+                </select>
               </div>
 
               <button type="button" className="btn btn-primary">Save</button>
